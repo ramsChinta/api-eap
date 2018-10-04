@@ -1,264 +1,273 @@
 {
   "swagger" : "2.0",
   "info" : {
-    "description" : "An API for managing a list of tasks that need to be done. \n\nDon't forget to take it for a spin by clicking on the **Try in Client** button next to each operation! All read operations are public and don't require authentication.\n",
-    "version" : "1.1.0",
-    "title" : "Tasks API",
-    "termsOfService" : "",
-    "contact" : { }
+    "description" : "An API \n1. for partners to sell dishes online\n2. for customers to order online\n",
+    "version" : "1.0.0",
+    "title" : "BestOfBonn_API",
+    "contact" : {
+      "name" : "Ramkumar Chinta",
+      "url" : "http://BestOfBonn.de",
+      "email" : "rchinta@talend.com"
+    }
   },
-  "host" : "tasksapi.restlet.net",
-  "basePath" : "/v1",
-  "schemes" : [ "https" ],
+  "host" : "localhost:8096",
+  "schemes" : [ "http" ],
   "consumes" : [ "application/json" ],
   "produces" : [ "application/json" ],
   "paths" : {
-    "/tasks/" : {
-      "get" : {
-        "summary" : "Load the list of Tasks",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "query",
-          "required" : false,
-          "type" : "string",
-          "description" : "Allows to filter the collection of results by the value of field `id`",
-          "x-example" : "47ee3550-b619-11e6-8408-0bdb025a7cfa"
-        }, {
-          "name" : "name",
-          "in" : "query",
-          "required" : false,
-          "type" : "string",
-          "description" : "Allows to filter the collection of results by the value of field `name`",
-          "x-example" : "Learn about hypermedia APIs"
-        }, {
-          "name" : "$page",
-          "in" : "query",
-          "required" : false,
-          "type" : "integer",
-          "description" : "Number of the page to retrieve.",
-          "x-example" : 1
-        }, {
-          "name" : "$size",
-          "in" : "query",
-          "required" : false,
-          "type" : "integer",
-          "description" : "Size of the page to retrieve.",
-          "x-example" : 10
-        }, {
-          "name" : "$sort",
-          "in" : "query",
-          "required" : false,
-          "type" : "string",
-          "description" : "Order in which to retrieve the results. Multiple sort criteria can be passed. Example: sort=age ASC,height DESC",
-          "x-example" : "createdAt DESC"
-        }, {
-          "name" : "completed",
-          "in" : "query",
-          "required" : false,
-          "type" : "boolean",
-          "description" : "Allows to filter the collection of results by the value of field `completed`",
-          "x-example" : true
-        }, {
-          "name" : "createdAt",
-          "in" : "query",
-          "required" : false,
-          "type" : "string",
-          "description" : "Allows to filter the collection of results by the value of field `createdAt`",
-          "x-example" : "2016.07.03"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Status 200",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/Task"
-              }
-            },
-            "examples" : {
-              "application/json" : "[{\n  \"id\": \"47ee3550-b619-11e6-8408-0bdb025a7cfa\",\n  \"name\": \"Feed the fish\",\n  \"completed\": false,\n  \"createdAt\": \"2016.07.03\"\n}]"
-            },
-            "headers" : {
-              "X-Page-Size" : {
-                "type" : "integer",
-                "x-example" : 25
-              },
-              "X-Page-Count" : {
-                "type" : "integer",
-                "x-example" : 1
-              },
-              "X-Page-Number" : {
-                "type" : "integer",
-                "x-example" : 1
-              },
-              "X-Total-Count" : {
-                "type" : "integer",
-                "x-example" : 2
-              }
-            }
-          },
-          "400" : {
-            "description" : "Status 400",
-            "schema" : {
-              "$ref" : "#/definitions/Error"
-            }
-          }
-        }
-      },
-      "post" : {
-        "summary" : "Create a new Task",
+    "/partner/addItem" : {
+      "put" : {
+        "summary" : "addItem",
         "consumes" : [ ],
         "parameters" : [ {
           "name" : "body",
           "in" : "body",
           "required" : true,
           "schema" : {
-            "$ref" : "#/definitions/Task"
-          },
-          "x-examples" : {
-            "application/json" : "{\n  \"name\": \"Feed the fish\",\n  \"completed\": false,\n  \"createdAt\": \"2016.07.03\"\n}"
+            "$ref" : "#/definitions/Items"
           }
         } ],
         "responses" : {
           "200" : {
-            "description" : "Status 200",
-            "schema" : {
-              "$ref" : "#/definitions/Task"
-            },
-            "examples" : {
-              "application/json" : "{\n  \"id\": \"47ee3550-b619-11e6-8408-0bdb025a7cfa\",\n  \"name\": \"Feed the fish\",\n  \"completed\": false,\n  \"createdAt\": \"2016.07.03\"\n}"
-            }
+            "description" : "Status 200"
           }
-        },
-        "security" : [ {
-          "HTTP_BASIC" : [ ]
-        } ]
+        }
       }
     },
-    "/tasks/{taskid}" : {
-      "get" : {
-        "summary" : "Load a specific Task",
-        "parameters" : [ ],
-        "responses" : {
-          "200" : {
-            "description" : "Status 200",
-            "schema" : {
-              "$ref" : "#/definitions/Task"
-            },
-            "examples" : {
-              "application/json" : "{\n  \"id\": \"47ee3550-b619-11e6-8408-0bdb025a7cfa\",\n  \"name\": \"Feed the fish\",\n  \"completed\": false,\n  \"createdAt\": \"2016.07.03\"\n}"
-            }
-          },
-          "400" : {
-            "description" : "Status 400",
-            "schema" : {
-              "$ref" : "#/definitions/Error"
-            }
-          }
-        }
-      },
-      "put" : {
-        "summary" : "Update a Task",
-        "consumes" : [ ],
-        "parameters" : [ {
-          "name" : "body",
-          "in" : "body",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/Task"
-          },
-          "x-examples" : {
-            "application/json" : "{\n  \"name\": \"Feed the fish\",\n  \"completed\": false,\n  \"createdAt\": \"2016.07.03\"\n}"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Status 200",
-            "schema" : {
-              "$ref" : "#/definitions/Task"
-            },
-            "examples" : {
-              "application/json" : "{\n  \"id\": \"47ee3550-b619-11e6-8408-0bdb025a7cfa\",\n  \"name\": \"Feed the fish\",\n  \"completed\": false,\n  \"createdAt\": \"2016.07.03\"\n}"
-            }
-          }
-        },
-        "security" : [ {
-          "HTTP_BASIC" : [ ]
-        } ]
-      },
+    "/partner/deleteItem" : {
       "delete" : {
-        "summary" : "Delete a Task",
+        "summary" : "listItems",
         "parameters" : [ ],
         "responses" : {
           "200" : {
             "description" : "Status 200"
           }
+        }
+      }
+    },
+    "/partner/listItems" : {
+      "get" : {
+        "summary" : "listItems",
+        "operationId" : "listItems",
+        "parameters" : [ {
+          "name" : "Accept",
+          "in" : "header",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "application/json"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200",
+            "schema" : {
+              "$ref" : "#/definitions/Items"
+            }
+          },
+          "404" : {
+            "description" : "Unknown Resource"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
         },
-        "security" : [ {
-          "HTTP_BASIC" : [ ]
-        } ]
-      },
-      "parameters" : [ {
-        "name" : "taskid",
-        "in" : "path",
-        "required" : true,
-        "type" : "string",
-        "description" : "Identifier of the Task",
-        "x-example" : "47ee3550-b619-11e6-8408-0bdb025a7cfa"
-      } ]
+        "security" : [ ]
+      }
+    },
+    "/partner/modifyItem" : {
+      "post" : {
+        "summary" : "addItem",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/partner/register" : {
+      "put" : {
+        "summary" : "addPartner",
+        "consumes" : [ ],
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Partner"
+          },
+          "x-examples" : {
+            "application/json" : "Add partner kfc"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Partner Added successfully"
+          },
+          "400" : {
+            "description" : "Invalid JSON data"
+          },
+          "500" : {
+            "description" : "Internal Server error"
+          }
+        }
+      }
+    },
+    "/partner/deregister" : {
+      "put" : {
+        "summary" : "addItem",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
+    },
+    "/partner/tesMe" : {
+      "post" : {
+        "summary" : "testHallo",
+        "consumes" : [ ],
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "x-examples" : {
+            "application/json" : "{\"display\" : \"hallo\"}"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Status 200"
+          }
+        }
+      }
     }
   },
   "securityDefinitions" : {
-    "HTTP_BASIC" : {
-      "description" : "All GET methods are public, meaning that *you can read all the data*. Write operations require authentication and therefore are forbidden to the general public.",
+    "Basic authentication" : {
       "type" : "basic"
     }
   },
   "definitions" : {
-    "Task" : {
+    "Partner" : {
       "type" : "object",
-      "required" : [ "completed", "id", "name" ],
+      "required" : [ "id", "partnerAddress" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "description" : "Partner Id",
+          "example" : 123
+        },
+        "speciality" : {
+          "type" : "string",
+          "description" : "Spanische Dishes",
+          "example" : "Spanisch Dishes"
+        },
+        "partnerName" : {
+          "type" : "string",
+          "description" : "Spanish Cuisines in Bonn",
+          "example" : "SpanishCuisines"
+        },
+        "partnerAddress" : {
+          "$ref" : "#/definitions/Address"
+        }
+      },
+      "example" : "{\n\t\"id\": \"1\",\n\t\"speciality\": \"Spanisch Dishes\",\n\t\"partnerName\": \"SpanishCuisines\",\n\t\"Address\": {\n\t\t\"Zip\": 53175,\n\t\t\"city\": \"Bonn\",\n\t\t\"street\": \"EltvillerStr.\",\n\t\t\"hausNr.\": \"9\"\n\t}\n}"
+    },
+    "Items" : {
+      "type" : "object",
+      "required" : [ "id", "itemName", "itemPrice", "partnerId" ],
       "properties" : {
         "id" : {
           "type" : "string",
-          "description" : "Auto-generated primary key field",
-          "example" : "3fa2eb40-b61c-11e6-9de0-fdbe71bceebb"
+          "description" : "Item Id",
+          "example" : "1"
         },
-        "name" : {
+        "itemName" : {
           "type" : "string",
-          "example" : "Figure out how to colonize Mars"
+          "description" : "Item name",
+          "example" : "Tapas"
         },
-        "completed" : {
-          "type" : "boolean"
-        },
-        "createdAt" : {
+        "itemPrice" : {
           "type" : "string",
-          "example" : "2016.10.06"
+          "description" : "Item Price in Euros",
+          "example" : "5 €"
+        },
+        "partnerId" : {
+          "type" : "number",
+          "description" : "Partner who sells this item"
+        },
+        "itemDescription" : {
+          "type" : "string",
+          "description" : "Item Description",
+          "example" : "Tapas"
         }
       },
-      "description" : "An object that represents a Task.",
-      "example" : "{\n  \"id\": \"47ee3550-b619-11e6-8408-0bdb025a7cfa\",\n  \"name\": \"Feed the fish\",\n  \"completed\": false,\n  \"createdAt\": \"2016.07.03\"\n}"
+      "description" : "An Item object",
+      "example" : "[{\n\t\t\"id\": \"1\",\n\t\t\"itemName\": \"Tapas\",\n\t\t\"itemPrice\": \"5 €\",\n\t\t\"itemDescription\": \"Tapas is a special ....\",\n        \"partnerId\" : 1\n\t},\n\t{\n\t\t\"id\": \"2\",\n\t\t\"itemName\": \"Patatas\",\n\t\t\"itemPrice\": \"7 €\",\n\t\t\"itemDescription\": \"Patatas is a special ....\",\n         \"partnerId\" : 1\n\t},\n\t{\n\t\t\"id\": \"3\",\n\t\t\"itemName\": \"Bocadillo\",\n\t\t\"itemPrice\": \"8 €\",\n\t\t\"itemDescription\": \"Bocadillo is a special ....\",\n         \"partnerId\" : 1\n\t}\n]"
+    },
+    "customer" : {
+      "type" : "object"
+    },
+    "Address" : {
+      "type" : "object",
+      "properties" : {
+        "address" : {
+          "type" : "object",
+          "description" : "Partner or Customer Address",
+          "properties" : {
+            "zip" : {
+              "type" : "number",
+              "description" : "zip"
+            },
+            "city" : {
+              "type" : "string",
+              "description" : "city"
+            },
+            "street" : {
+              "type" : "string",
+              "description" : "Street name"
+            },
+            "hausNr." : {
+              "type" : "string",
+              "description" : "House number"
+            }
+          }
+        }
+      },
+      "description" : "Partner or Customer Address",
+      "example" : "[{\n\t\t\"Zip\": 53175,\n\t\t\"city\": \"Bonn\",\n\t\t\"street\": \"EltvillerStr.\",\n\t\t\"hausNr.\": \"9\"\n\t}\n]"
     },
     "Error" : {
+      "type" : "object"
+    },
+    "PersonalDetails" : {
       "type" : "object",
-      "required" : [ "code" ],
+      "required" : [ "dateOfBirth", "firstName", "lastName" ],
       "properties" : {
-        "code" : {
-          "type" : "integer",
-          "minimum" : 400,
-          "maximum" : 599
-        },
-        "description" : {
+        "gender" : {
           "type" : "string",
-          "example" : "Bad query parameter [$size]: Invalid integer value [abc]"
+          "enum" : [ "Male", "Female" ]
         },
-        "reasonPhrase" : {
+        "lastName" : {
           "type" : "string",
-          "example" : "Bad Request"
+          "description" : "Last Name"
+        },
+        "firstName" : {
+          "type" : "string",
+          "description" : "First Name"
+        },
+        "dateOfBirth" : {
+          "type" : "string",
+          "format" : "date",
+          "description" : "Date of Birth"
         }
       },
-      "description" : "This general error structure is used throughout this API.",
-      "example" : "{\n  \"code\": 400,\n  \"description\": \"Bad query parameter [$size]: Invalid integer value [abc]\",\n  \"reasonPhrase\": \"Bad Request\"\n}"
+      "description" : "Personal identification details",
+      "example" : "[{\n\t\"gender\": \"Male\",\n\t\"lastName\": \"Bonn\",\n\t\"firstName\": \"EltvillerStr.\",\n\t\"dateOfBirth\": \"2018-08-22T15:25:43.511Z\"\n}]"
     }
   }
 }
